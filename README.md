@@ -6,8 +6,8 @@
 - [Table of contents](#table-of-contents)
 - [Quick start (run & test locally with Docker)](#quick-start-run--test-locally-with-docker)
 - [@TODO](#todo)
-  - [Dockerization - Quick start](#dockerization---quick-start)
-  - [Create Jenkins user](#create-jenkins-user)
+- [Dockerization - Quick start](#dockerization---quick-start)
+- [Create Jenkins user](#create-jenkins-user)
 
 Description: @TODO
 
@@ -49,7 +49,7 @@ In you favorite terminal, run:
     nestybox/jenkins-syscont
 ```
 
-## Dockerization - Quick start
+# Dockerization - Quick start
 
 Fichiers de configuration nécessaires côté serveur :
 
@@ -102,7 +102,7 @@ Fichiers de configuration nécessaires côté serveur :
   docker run -v jenkins-docker_jenkins_home:/volume -v /tmp:/backup --rm loomchild/volume-backup restore jenkins-master
 ```
 
-## Create Jenkins user
+# Create Jenkins user
 
 ```bash
   sudo adduser --no-create-home jenkins
