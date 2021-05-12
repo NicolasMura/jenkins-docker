@@ -1,0 +1,20 @@
+# Inspired from https://dev.to/andresfmoya/install-jenkins-using-docker-compose-4cab
+
+version: "3.7"
+
+services:
+  jenkins-master:
+    image: nicolasmura/jenkins-master
+    container_name: jenkins-master
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - ${HOST_HTTP_PORT}:8080
+      - ${HOST_BUILD_EXECUTORS_PORT}:50000
+    volumes:
+      - ${HOST_DOCKER}:/var/run/docker.sock
+      - jenkins_home:/var/jenkins_home
+
+volumes:
+  jenkins_home:
