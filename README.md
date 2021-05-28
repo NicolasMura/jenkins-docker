@@ -27,11 +27,11 @@ In you favorite terminal, run:
   nano .env
 
   # Start up the application using the docker-compose
-  docker-compose -p jenkins-docker --env-file ./.env up -d --build
-  docker-compose --env-file ./.env down
+  docker-compose --env-file .env up -d --build
+  docker-compose --env-file .env down
 
   # Special magical command for Mac OS X
-  docker-compose -p jenkins-docker --env-file ./.env up -d --build && docker exec -u root -it jenkins-master bash -c 'chown :docker /var/run/docker.sock'
+  docker-compose --env-file .env up -d --build && docker exec -u root -it jenkins-master bash -c 'chown :docker /var/run/docker.sock'
 ```
 
 ... and visit http://localhost:8080 !
@@ -62,7 +62,7 @@ Fichiers de configuration nécessaires côté serveur :
   docker build -t jenkins-master .docker
   docker stop jenkins-master
   docker run --rm -it --name jenkins-master \
-    --env-file ./.env \
+    --env-file .env \
     --group-add $(stat -f '%g' /var/run/docker.sock) \
     -v ${HOST_DOCKER}:/var/run/docker.sock \
     -v jenkins_home:/var/jenkins_home \
@@ -89,11 +89,11 @@ Fichiers de configuration nécessaires côté serveur :
   docker exec -it jenkins bash
 
   # Start up the application using the docker-compose
-  docker-compose -p jenkins-docker --env-file ./.env up -d --build
-  docker-compose --env-file ./.env down
+  docker-compose -p jenkins-docker --env-file .env up -d --build
+  docker-compose --env-file .env down
 
   # Special magical command for Mac OS X
-  docker-compose -p jenkins-docker --env-file ./.env up -d --build && docker exec -u root -it jenkins-master bash -c 'chown :docker /var/run/docker.sock'
+  docker-compose -p jenkins-docker --env-file .env up -d --build && docker exec -u root -it jenkins-master bash -c 'chown :docker /var/run/docker.sock'
 
   # Backup Jenkins data to file (à automatiser) - To do AFTER stopping the container
   docker run -v jenkins-docker_jenkins_home:/volume -v /tmp:/backup --rm loomchild/volume-backup backup jenkins-master
