@@ -8,6 +8,7 @@
 - [@TODO](#todo)
 - [Dockerization - Quick start](#dockerization---quick-start)
 - [Create Jenkins user](#create-jenkins-user)
+- [Allow Webhooks from Github actions](#allow-webhooks-from-github-actions)
 
 Description: @TODO
 
@@ -22,7 +23,7 @@ In you favorite terminal, run:
 
 ```bash
   cd <WHERE_YOU_WANT>
-  git clone @TODO
+  git clone git@github.com:NicolasMura/jenkins-docker.git
   # Create .env file (cf. ex. de contenu : .env.example)
   nano .env
 
@@ -96,10 +97,10 @@ Fichiers de configuration nécessaires côté serveur :
   docker-compose -p jenkins-docker --env-file .env up -d --build && docker exec -u root -it jenkins-master bash -c 'chown :docker /var/run/docker.sock'
 
   # Backup Jenkins data to file (à automatiser) - To do AFTER stopping the container
-  docker run -v jenkins-docker_jenkins_home:/volume -v /tmp:/backup --rm loomchild/volume-backup backup jenkins-master
+  docker run -v jenkins-docker_jenkins_home:/volume -v /tmp:/backup --rm loomchild/volume-backup backup -v jenkins-master
 
   # Restore Jenkins data from file - To do BEFORE running the container
-  docker run -v jenkins-docker_jenkins_home:/volume -v /tmp:/backup --rm loomchild/volume-backup restore jenkins-master
+  docker run -v jenkins-docker_jenkins_home:/volume -v /tmp:/backup --rm loomchild/volume-backup restore -v jenkins-master
 ```
 
 # Create Jenkins user
@@ -108,3 +109,17 @@ Fichiers de configuration nécessaires côté serveur :
   sudo adduser --no-create-home jenkins
   sudo usermod -aG docker jenkins
 ```
+
+# Allow Webhooks from Github actions
+
+To allow Webhooks from Github actions, if you use UFW with restricted rules, you will have to allow Github API servers's IPs:
+
+```bash
+  sudo ufw allow from 185.199.108.0/22 to any port 443 proto tcp
+  sudo ufw allow from 140.82.112.0/20 to any port 443 proto tcp
+  sudo ufw allow from 143.55.64.0/20 to any port 443 proto tcp
+  sudo ufw allow from 2a0a:a440::/29 to any port 443 proto tcp
+  sudo ufw allow from 2606:50c0::/32 to any port 443 proto tcp
+```
+
+Source: https://api.github.com/meta (hooks entry)

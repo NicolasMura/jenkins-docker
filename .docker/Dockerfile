@@ -1,5 +1,5 @@
 # https://medium.com/the-devops-ship/custom-jenkins-dockerfile-jenkins-docker-image-with-pre-installed-plugins-default-admin-user-d0107b582577
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins:lts-jdk11
 
 LABEL maintainer="Nicolas MURA <contact@nicolasmura.fr>"
 
@@ -60,6 +60,9 @@ RUN usermod -aG docker jenkins
 
 # RUN groupadd docker
 # RUN usermod -aG docker jenkins
+
+# Add some debug utilities
+RUN apt-get update && apt-get install -y nano
 
 # drop back to the regular jenkins user - good practice
 USER jenkins
