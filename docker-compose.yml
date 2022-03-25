@@ -6,7 +6,7 @@ services:
   jenkins-master:
     image: nicolasmura/jenkins-master
     container_name: jenkins-master
-    restart: unless-stopped
+    restart: always
     env_file:
       - .env
     ports:
